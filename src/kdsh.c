@@ -8,6 +8,8 @@
 #include"arch.h"
 #include"syscall.h"
 #include"interaction.h"
+#include"malloc.h"
+#include"tools.h"
 
 int main(int argc, const char *argv[]);
 
@@ -25,5 +27,13 @@ int
 main(int argc, const char *argv[])
 {
 	puts("Hello kdsh!\n");
+	void *p[100];
+	for (int i = 0; i < 100; i++)
+		p[i] = malloc(i * 2);
+	for (int i = 0; i < 100; i++)
+		free(p[i]);
+
+	assert(0);
+
 	return 0;
 }

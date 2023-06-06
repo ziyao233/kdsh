@@ -8,6 +8,10 @@
 #ifndef __KDSH_TYPES_H_INC__
 #define __KDSH_TYPES_H_INC__
 
+#ifndef NULL
+#define NULL ((void*)0)
+#endif
+
 typedef unsigned long int size_t;
 typedef long int ssize_t;
 

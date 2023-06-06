@@ -24,17 +24,24 @@ exit(int code)
 ssize_t 
 read(int fd, void *buf, size_t count)
 {
-	return syscall3(fd, buf, count, SYS_read);
+	return syscall3(fd, (unsigned long int)buf, count, SYS_read);
 }
 
 ssize_t
 write(int fd, void *buf, size_t count)
 {
-	return syscall3(fd, buf, count, SYS_write);
+	return syscall3(fd, (unsigned long int)buf, count, SYS_write);
 }
 
 void *
 mmap(void *addr, size_t length, int prot, int flags, int fd, size_t offset)
 {
-	return syscall6(addr, length, prot, flags, fd, offset, SYS_mmap);
+	return (void*)syscall6((unsigned long int)addr, length, prot, flags,
+			       fd, offset, SYS_mmap);
+}
+
+int
+munmap(void *addr, size_t length)
+{
+	return syscall2((unsigned long int)addr, length, SYS_munmap);
 }
