@@ -7,6 +7,7 @@
 
 #include"arch.h"
 #include"syscall.h"
+#include"interaction.h"
 
 int main(int argc, const char *argv[]);
 
@@ -23,5 +24,6 @@ start_c(unsigned long int *arg)
 int
 main(int argc, const char *argv[])
 {
+	puts("Hello kdsh!\n");
 	return 0;
 }
