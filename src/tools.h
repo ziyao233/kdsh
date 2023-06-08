@@ -10,7 +10,6 @@
 
 #include"interaction.h"
 
-#define __macro_to_str__(s) #s
 #define assert(expr) do {					\
 	if (!(expr)) {						\
 		puts(__FILE__					\
@@ -18,8 +17,14 @@
 		abort();					\
 	}							\
 } while (0)
-#undef to_str
+
+#define check(expr, msg) do {					\
+	if (!(expr))						\
+		fatal(msg);					\
+} while (0)
+		  
 
 void abort(void);
+void fatal(const char *msg);
 
 #endif	// __KDSH_TOOLS_H_INC__

@@ -17,7 +17,8 @@ else
 DEBUG_FLAGS	= -g -O0
 endif
 
-CFLAGS		= $(ARCH_FLAGS) $(DEBUG_FLAGS) -nostdlib -fno-builtin -static
+CFLAGS		= $(ARCH_FLAGS) $(DEBUG_FLAGS) -nostdlib -fno-builtin -static \
+		  -std=gnu99 -Wall -Wextra -pedantic
 
 SRCS		= $(wildcard src/*.c) $(wildcard src/*.S)
 OBJS		= $(patsubst %.S, %.o, $(patsubst %.c, %.o, $(SRCS)))

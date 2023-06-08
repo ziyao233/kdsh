@@ -16,3 +16,13 @@ abort(void)
 	exit(-1);
 	return;
 }
+
+void
+fatal(const char *msg)
+{
+	puts("Fatal error: ");
+	puts(msg);
+	puts("\nkdsh now exi:s");
+	abort();
+	return;
+}

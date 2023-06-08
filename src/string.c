@@ -26,6 +26,16 @@ strcpy(char *dst, const char *src)
 	return ret;
 }
 
+int
+strcmp(const char *a, const char *b)
+{
+	while (*a == *b && *a) {
+		a++;
+		b++;
+	}
+	return *a - *b;
+}
+
 void *
 memcpy(void *dst, const void *src, size_t size)
 {
