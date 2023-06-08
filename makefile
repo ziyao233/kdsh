@@ -9,6 +9,7 @@ ARCH		= $(shell uname -m)
 CONFIG_$(ARCH)	= yes
 
 NATIVE_FLAGS_$(CONFIG_x86_64)		= -DTARGET_x86_64
+NATIVE_FLAGS_$(CONFIG_riscv64)		= -DTARGET_riscv64 -mno-relax
 ARCH_FLAGS	= $(NATIVE_FLAGS_yes)
 
 ifeq ($(RELEASE),1)

@@ -7,14 +7,7 @@
 
 #include"arch.h"
 #include"types.h"
-
-#define SYS_read	0
-#define SYS_write	1
-#define SYS_open	2
-#define SYS_close	3
-#define SYS_mmap	9
-#define SYS_munmap	11
-#define SYS_exit	60
+#include"syscall.h"
 
 void
 exit(int code)
@@ -23,7 +16,7 @@ exit(int code)
 	return;
 }
 
-ssize_t 
+ssize_t
 read(int fd, void *buf, size_t count)
 {
 	return syscall3(fd, (unsigned long int)buf, count, SYS_read);
@@ -35,11 +28,24 @@ write(int fd, void *buf, size_t count)
 	return syscall3(fd, (unsigned long int)buf, count, SYS_write);
 }
 
+#ifdef SYS_open
+
 int
 open(const char *p, int flags, int mode)
 {
 	return syscall3((unsigned long int)p, flags, mode, SYS_open);
 }
+
+#else
+
+int
+open(const char *p, int flags, int mode)
+{
+	return syscall4(AT_FDCWD, (unsigned long int)p, flags, mode,
+			SYS_openat);
+}
+
+#endif
 
 int
 close(int fd)

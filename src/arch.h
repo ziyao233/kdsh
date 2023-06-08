@@ -8,9 +8,13 @@
 #ifndef __KDSH_ARCH_H_INC__
 #define __KDSH_ARCH_H_INC__
 
-#ifdef TARGET_x86_64
+#if defined(TARGET_x86_64)
 
 #include"arch-x86_64.h"
+
+#elif defined(TARGET_riscv64)
+
+#include"arch-riscv64.h"
 
 #else
 

@@ -21,6 +21,8 @@
 #define O_WRONLY	01
 #define O_RDWR		02
 
+#define AT_FDCWD	(-100)
+
 #define MAP_ANONYMOUS	0x20
 #define MAP_PRIVATE	0x02
 #define PROT_READ	1
