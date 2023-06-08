@@ -8,4 +8,6 @@
 #ifndef __KDSH_CMD_H_INC__
 #define __KDSH_CMD_H_INC__
 
+int cmd_write(int argc, const char *argv[]);
+
 #endif	// __KDSH_CMD_H_INC__

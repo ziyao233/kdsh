@@ -35,13 +35,18 @@ cmd_license(int argc, const char *argv[])
 
 typedef int (*Cmd_Fn)(int, const char **);
 
+#define defcmd(name) {#name, (Cmd_Fn)cmd_##name}
+
 struct {
 	const char *name;
 	Cmd_Fn fn;
 } cmds[] = {
-	{"license", cmd_license},
+	defcmd(license),
+	defcmd(write),
 	{NULL, NULL}
 };
+
+#undef defcmd
 
 static inline Cmd_Fn
 search_cmd(const char *name)
@@ -86,6 +91,7 @@ read_cmd(int *output_argc)
 			p++;
 	}
 	free(line);
+	(*output_argc)--;
 	return argv;
 }
 
@@ -95,6 +101,8 @@ enter_shell(void)
 	while (1) {
 		int argc = 0;
 		char **argv = read_cmd(&argc);
+		if (!argv)
+			continue;
 
 		Cmd_Fn fn = search_cmd(argv[0]);
 

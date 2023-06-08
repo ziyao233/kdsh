@@ -22,6 +22,22 @@
 	if (!(expr))						\
 		fatal(msg);					\
 } while (0)
+
+#define scheck(expr, msg) do {					\
+	if (!(expr)) {						\
+		puts(msg);					\
+		return -1;					\
+	}							\
+} while (0)
+
+#define define_usage(name, ...)					\
+static inline int						\
+usage(void)							\
+{								\
+	puts(#name ": usage:\n");				\
+	puts(#__VA_ARGS__);						\
+	return -1;							\
+}
 		  
 
 void abort(void);

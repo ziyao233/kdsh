@@ -10,6 +10,8 @@
 
 #define SYS_read	0
 #define SYS_write	1
+#define SYS_open	2
+#define SYS_close	3
 #define SYS_mmap	9
 #define SYS_munmap	11
 #define SYS_exit	60
@@ -31,6 +33,18 @@ ssize_t
 write(int fd, void *buf, size_t count)
 {
 	return syscall3(fd, (unsigned long int)buf, count, SYS_write);
+}
+
+int
+open(const char *p, int flags, int mode)
+{
+	return syscall3((unsigned long int)p, flags, mode, SYS_open);
+}
+
+int
+close(int fd)
+{
+	return syscall1(fd, SYS_close);
 }
 
 void *
