@@ -1,5 +1,6 @@
 #include"arch.h"
 #include"syscall.h"
+#include"string.h"
 #include"malloc.h"
 #include"tools.h"
 
@@ -125,4 +126,15 @@ free(void *p)
 	else
 		free_small_obj(p);
 	return;
+}
+
+void *
+mem_resize(void *p, size_t oldSize, size_t size)
+{
+	void *new = malloc(size);
+	if (!new)
+		return NULL;
+	memcpy(new, p, oldSize);
+	free(p);
+	return new;
 }

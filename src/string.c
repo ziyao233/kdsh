@@ -16,3 +16,30 @@ strlen(const char *s)
 		size++;
 	return size;
 }
+
+char *
+strcpy(char *dst, const char *src)
+{
+	char *ret = dst;
+	while (*src)
+		*dst++ = *src++;
+	return ret;
+}
+
+void *
+memcpy(void *dst, const void *src, size_t size)
+{
+	char *d = dst, *s = (char *)src;
+	while (size--)
+		*d++ = *s++;
+	return dst;
+}
+
+void *
+memset(void *s, int c, size_t n)
+{
+	char *p = s;
+	while (n--)
+		*p++ = (char)c;
+	return s;
+}

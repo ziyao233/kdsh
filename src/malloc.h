@@ -12,5 +12,6 @@
 
 void *malloc(size_t size);
 void free(void *p);
+void *mem_resize(void *p, size_t oldSize, size_t size);
 
 #endif	// __KDSH_MALLOC_H_INC__

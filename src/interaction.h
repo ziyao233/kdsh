@@ -9,7 +9,9 @@
 #define __KDSH_INTERACTION_H_INC__
 
 #include"types.h"
+#include"malloc.h"
 
 void puts(const char *msg);
+char *read_a_line(void);
 
 #endif	// __KDSH_INTERACTION_H_INC__

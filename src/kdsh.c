@@ -26,12 +26,12 @@ start_c(unsigned long int *arg)
 int
 main(int argc, const char *argv[])
 {
-	puts("Hello kdsh!\n");
-	void *p[100];
-	for (int i = 0; i < 100; i++)
-		p[i] = malloc(i * 15);
-	for (int i = 0; i < 100; i++)
-		free(p[i]);
+	while (1) {
+		char *line = read_a_line();
+		assert(line);
+		puts(line);
+		free(line);
+	}
 
 	return 0;
 }
