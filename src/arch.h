@@ -16,6 +16,10 @@
 
 #include"arch-riscv64.h"
 
+#elif defined(TARGET_aarch64)
+
+#include"arch-aarch64.h"
+
 #else
 
 #error "Unsupported architecture"
