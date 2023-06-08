@@ -29,11 +29,9 @@ main(int argc, const char *argv[])
 	puts("Hello kdsh!\n");
 	void *p[100];
 	for (int i = 0; i < 100; i++)
-		p[i] = malloc(i * 2);
+		p[i] = malloc(i * 15);
 	for (int i = 0; i < 100; i++)
 		free(p[i]);
-
-	assert(0);
 
 	return 0;
 }

@@ -32,9 +32,9 @@ typedef struct {
 static Pool *pool = NULL;
 
 static void *
-alloc_single_page(void)
+alloc_pages(size_t size)
 {
-	return mmap(NULL, 4096, PROT_READ | PROT_WRITE,
+	return mmap(NULL, size, PROT_READ | PROT_WRITE,
 		    MAP_ANONYMOUS | MAP_PRIVATE,
 		    -1, 0);
 }
@@ -42,7 +42,7 @@ alloc_single_page(void)
 static inline int
 create_pool(void)
 {
-	Pool *p = alloc_single_page();
+	Pool *p = alloc_pages(PAGE_SIZE);
 	if (pool == MMAP_FAILED)
 		return -1;
 	p->freeOffset	= 0;
@@ -68,12 +68,22 @@ alloc_small_obj(size_t size)
 	return res;
 }
 
+static inline void *
+alloc_large_obj(size_t size)
+{
+	Large_Obj_Block *blk = alloc_pages(size + sizeof(Large_Obj_Block));
+	if (!blk)
+		return NULL;
+
+	blk->size = size;
+	return blk->start;
+}
+
 void *
 malloc(size_t size)
 {
-	const size_t haltPageSize = 2048;
-	if (size > haltPageSize)
-		abort();
+	if (size > PAGE_SIZE / 4)
+		return alloc_large_obj(size);
 	else
 		return alloc_small_obj(size);
 }
@@ -96,6 +106,14 @@ free_small_obj(void *p)
 	return;
 }
 
+static inline void
+free_large_obj(void *p)
+{
+	Large_Obj_Block *blk = (Large_Obj_Block *)p - 1;
+	assert(!munmap(blk, blk->size));
+	return;
+}
+
 void
 free(void *p)
 {
@@ -103,7 +121,7 @@ free(void *p)
 		return;
 
 	if (is_large_obj(p))
-		abort();
+		free_large_obj(p);
 	else
 		free_small_obj(p);
 	return;
