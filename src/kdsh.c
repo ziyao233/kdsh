@@ -43,6 +43,7 @@ struct {
 } cmds[] = {
 	defcmd(license),
 	defcmd(write),
+	defcmd(sysrq),
 	{NULL, NULL}
 };
 

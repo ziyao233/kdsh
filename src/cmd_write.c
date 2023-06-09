@@ -29,7 +29,7 @@ cmd_write(int argc, const char *argv[])
 	else if (argc == 2)
 		argStart = 1;
 	else
-		return usage();
+		return write_usage();
 
 	int fd = open(argv[argStart], flag, 0644);
 	scheck(fd >= 0, "Cannot open file\n");

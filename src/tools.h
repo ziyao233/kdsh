@@ -32,7 +32,7 @@
 
 #define define_usage(name, ...)					\
 static inline int						\
-usage(void)							\
+name##_usage(void)							\
 {								\
 	puts(#name ": usage:\n");				\
 	puts(#__VA_ARGS__);						\
