@@ -36,7 +36,14 @@ kdsh: $(OBJS)
 %.o: %.S
 	$(TARGET_CC) $(CFLAGS) $< -c -o $@
 
-.PHONY: clean
+.PHONY: clean initramfs
 
 clean:
 	-rm $(OBJS)
+initramfs: initramfs.gz
+initramfs.gz: kdsh
+	mkdir -p init						&& \
+	cd init							&& \
+	cp ../kdsh init						&& \
+	find . | cpio -ov -H newc | gzip -9 > ../initramfs.gz
+	rm -rf init
