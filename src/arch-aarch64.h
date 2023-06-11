@@ -17,5 +17,6 @@
 #define SYS_mmap	222
 #define SYS_munmap	215
 #define SYS_exit	93
+#define SYS_mount	40
 
 #endif	// __KDSH_ARCH_AARCH64_H_INC__

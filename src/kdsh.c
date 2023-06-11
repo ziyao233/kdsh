@@ -44,6 +44,7 @@ struct {
 	defcmd(license),
 	defcmd(write),
 	defcmd(sysrq),
+	defcmd(mount),
 	{NULL, NULL}
 };
 

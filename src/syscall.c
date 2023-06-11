@@ -65,3 +65,12 @@ munmap(void *addr, size_t length)
 {
 	return syscall2((unsigned long int)addr, length, SYS_munmap);
 }
+
+int
+mount(const char *source, const char *target, const char *type,
+      unsigned long int flags, const void *data)
+{
+	return syscall5((unsigned long int)source, (unsigned long int)target,
+			(unsigned long int)type, flags,
+			(unsigned long int)data, SYS_mount);
+}

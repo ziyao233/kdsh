@@ -37,5 +37,7 @@ int close(int fd);
 void *mmap(void *addr, size_t length, int prot, int flags,
 	   int fd, size_t offset);
 int munmap(void *addr, size_t length);
+int mount(const char *src, const char *target, const char *type,
+	  unsigned long int flags, const void *data);
 
 #endif	// __KDSH_SYSCALL_H_INC__
