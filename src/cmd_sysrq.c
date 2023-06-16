@@ -13,6 +13,7 @@ define_usage(sysrq,
 \n\t	Trigger a sysrq event
 \n\t
 \n\t	<Event>: Event to trigger, could be
+\n\t\t		c:\t	kernel crash
 \n\t\t		g:\t	kgdb event
 \n)
 

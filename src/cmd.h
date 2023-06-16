@@ -8,9 +8,15 @@
 #ifndef __KDSH_CMD_H_INC__
 #define __KDSH_CMD_H_INC__
 
-int cmd_write(int argc, const char *argv[]);
-int cmd_sysrq(int argc, const char *argv[]);
-int cmd_mount(int argc, const char *argv[]);
-int cmd_mkdir(int argc, const char *argv[]);
+#define defcmd(name)					\
+int cmd_##name(int argc, const char *argv[]);		\
+int name##_usage(void);
+
+defcmd(write)
+defcmd(sysrq)
+defcmd(mount)
+defcmd(mkdir)
+
+#undef defcmd
 
 #endif	// __KDSH_CMD_H_INC__

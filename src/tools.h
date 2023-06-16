@@ -31,14 +31,13 @@
 } while (0)
 
 #define define_usage(name, ...)					\
-static inline int						\
+int						\
 name##_usage(void)							\
 {								\
 	puts(#name ": usage:\n");				\
 	puts(#__VA_ARGS__);						\
 	return -1;							\
 }
-		  
 
 void abort(void);
 void fatal(const char *msg);

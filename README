@@ -62,6 +62,13 @@ is needed.
 
 	make initramfs
 
+= Commands
+
+All commands are built in the shell. For a list of them, refer to src/cmd.h or
+use command 'help' in kdsh.
+
+'help help' prints the usage of 'help' command.
+
 = Author and License
 
 This program is written by Ziyao <ziyao@disroot.org>, initially used for kernel

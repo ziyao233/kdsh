@@ -25,6 +25,13 @@ print_license(void)
 }
 
 int
+license_usage(void)
+{
+	puts("\n\tlicense\n\tPrint the license of kdsh\n");
+	return 0;
+}
+
+int
 cmd_license(int argc, const char *argv[])
 {
 	(void)argc;
@@ -34,32 +41,97 @@ cmd_license(int argc, const char *argv[])
 }
 
 typedef int (*Cmd_Fn)(int, const char **);
+typedef int (*Cmd_Usage)(void);
 
-#define defcmd(name) {#name, (Cmd_Fn)cmd_##name}
+static int cmd_help(int argc, const char *argv[]);
+static int help_usage(void);
+
+#define defcmd(name) {#name, (Cmd_Fn)cmd_##name, (Cmd_Usage)name##_usage}
 
 struct {
 	const char *name;
 	Cmd_Fn fn;
+	int (*usage)(void);
 } cmds[] = {
 	defcmd(license),
 	defcmd(write),
 	defcmd(sysrq),
 	defcmd(mount),
 	defcmd(mkdir),
-	{NULL, NULL}
+	defcmd(help),
+	{NULL, NULL, NULL}
 };
 
 #undef defcmd
 
-static inline Cmd_Fn
-search_cmd(const char *name)
+static inline int
+search_cmd_index(const char *name)
 {
 	for (int i = 0; cmds[i].name; i++) {
 		if (!strcmp(cmds[i].name, name))
-			return cmds[i].fn;
+			return i;
 	}
-	return NULL;
+	return -1;
 }
+
+static inline Cmd_Fn
+search_cmd(const char *name)
+{
+	int i = search_cmd_index(name);
+	return i < 0 ? NULL : cmds[i].fn;
+}
+
+static inline Cmd_Usage
+search_usage(const char *name)
+{
+	int i = search_cmd_index(name);
+	return i < 0 ? NULL : cmds[i].usage;
+}
+
+static int
+help_print_list()
+{
+	puts("\nAvailable commands:\n");
+	for (int i = 0; cmds[i].name; i++) {
+		puts("\t");
+		puts(cmds[i].name);
+		puts("\n");
+	}
+	return 0;
+}
+
+static int
+help_print_usage(const char *name)
+{
+	Cmd_Usage usage = search_usage(name);
+	if (usage) {
+		return usage();
+	} else {
+		puts("No such command: ");
+		puts(name);
+		puts("\n");
+		return -1;
+	}
+}
+
+static int
+cmd_help(int argc, const char *argv[])
+{
+	if (argc == 0) {
+		return help_print_list();
+	} else {
+		return help_print_usage(argv[1]);
+	}
+}
+
+static
+define_usage(help,
+\n\t	help [command]
+\n\t	Get a list of available commands or description of the [command].
+\n\t
+\n\t	Get the description of [command]. If [command] is omitted, a list of
+\n\t	available commands will be printed.
+\n)
 
 char **
 read_cmd(int *output_argc)
