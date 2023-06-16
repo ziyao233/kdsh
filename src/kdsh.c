@@ -45,6 +45,7 @@ struct {
 	defcmd(write),
 	defcmd(sysrq),
 	defcmd(mount),
+	defcmd(mkdir),
 	{NULL, NULL}
 };
 

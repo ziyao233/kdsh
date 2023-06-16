@@ -74,3 +74,9 @@ mount(const char *source, const char *target, const char *type,
 			(unsigned long int)type, flags,
 			(unsigned long int)data, SYS_mount);
 }
+
+int
+mkdirat(int dir, const char *path, int mode)
+{
+	return syscall3(dir, (unsigned long int)path, mode, SYS_mkdirat);
+}

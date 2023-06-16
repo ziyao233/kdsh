@@ -11,5 +11,6 @@
 int cmd_write(int argc, const char *argv[]);
 int cmd_sysrq(int argc, const char *argv[]);
 int cmd_mount(int argc, const char *argv[]);
+int cmd_mkdir(int argc, const char *argv[]);
 
 #endif	// __KDSH_CMD_H_INC__

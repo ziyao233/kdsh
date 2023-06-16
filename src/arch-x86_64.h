@@ -18,5 +18,6 @@
 #define SYS_munmap	11
 #define SYS_exit	60
 #define SYS_mount	165
+#define SYS_mkdirat	258
 
 #endif	// __KDSH_ARCH_X86_64_H_INC__

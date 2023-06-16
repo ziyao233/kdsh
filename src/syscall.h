@@ -39,5 +39,6 @@ void *mmap(void *addr, size_t length, int prot, int flags,
 int munmap(void *addr, size_t length);
 int mount(const char *src, const char *target, const char *type,
 	  unsigned long int flags, const void *data);
+int mkdirat(int dir, const char *path, int mode);
 
 #endif	// __KDSH_SYSCALL_H_INC__
