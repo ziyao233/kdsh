@@ -1,0 +1,71 @@
+================================================================================
+
+					kdsh
+			A simple shell for kernel debugging.
+
+================================================================================
+
+= Introduction
+
+A simple shell for kernel debugging, compiles WITHOUT any dependency including
+libc and libgcc/compiler-rt)
+
+= Supported Architectures
+
+ o x86_64/amd64
+ o aarch64/arm64
+ o riscv64
+
+= Build
+
+You need
+
+ o ISO C99-compatible C Compiler
+ o make
+
+The makefile assumes C compiler CC is able to handle assembly (.S files), too.
+
+== Makefile Arguments
+
+ o ARCH:	Targeted Architecture
+ o CC:		Compiler Name
+ o CROSS_COMPILE:
+ 		The prefix of cross toolchain
+ o RELEASE:	When RELEASE is set to 1, kdsh is compiled with optimization and
+ 		without debug symbols.
+
+== Native Build
+
+For a native build, simply run
+
+	make
+
+The architecture is detected by 'uname -m'
+
+== Cross Compiling
+
+For cross compiling, you need to specify ARCH, CROSS_COMPILE manually.
+
+e.g., to build on arm64 with gcc prefixed aarch64-none-elf-
+(aarch64-none-elf-gcc), the following command is appropriate.
+
+	make ARCH=aarch64 CROSS_COMPILE=aarch64-none-elf-
+
+== Generate initramfs
+
+The makefile could generate an initramfs with kdsh only, but
+
+ o cpio
+ o gzip
+
+is needed.
+
+	make initramfs
+
+= Author and License
+
+This program is written by Ziyao <ziyao@disroot.org>, initially used for kernel
+hacking purpose.
+
+kdsh is distributed under Mozilla Public License Version 2.0. Refer to LICENSE
+for more information.
