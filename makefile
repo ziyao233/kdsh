@@ -4,12 +4,13 @@
 #	Copyright (c) 2023 Yao Zi. All rights reserved.
 
 CROSS_COMPILE	=
-TARGET_CC	= $(CROSS_COMPILE)gcc
+CC		= gcc
+TARGET_CC	= $(CROSS_COMPILE)$(CC)
 ARCH		= $(shell uname -m)
 CONFIG_$(ARCH)	= yes
 
 NATIVE_FLAGS_$(CONFIG_x86_64)		= -DTARGET_x86_64
-NATIVE_FLAGS_$(CONFIG_riscv64)		= -DTARGET_riscv64 -mno-relax
+NATIVE_FLAGS_$(CONFIG_riscv64)		= -DTARGET_riscv64 # -mno-relax
 NATIVE_FLAGS_$(CONFIG_aarch64)		= -DTARGET_aarch64
 ARCH_FLAGS	= $(NATIVE_FLAGS_yes)
 
