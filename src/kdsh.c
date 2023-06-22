@@ -133,6 +133,65 @@ define_usage(help,
 \n\t	available commands will be printed.
 \n)
 
+static inline int
+is_space(const char *p)
+{
+	return *p == ' ';
+}
+
+static const char *
+skip_space(const char *p)
+{
+	while (is_space(p))
+		p++;
+	return p;
+}
+
+static const char *
+skip_word(const char *p)
+{
+	while(!is_space(p) && *p)
+		p++;
+	return p;
+}
+
+static const char *
+copy_str_until(char *dst, const char *src, const char *srcEnd)
+{
+	char *p = dst;
+	while (src < srcEnd) {
+		*p = *src;
+		src++;
+		p++;
+	}
+	*p = '\0';
+	return dst;
+}
+
+static char **
+split_cmd_line(const char *line, int *output_argc)
+{
+	*output_argc = 0;
+	char **argv = NULL;
+	for (const char *p = line; *p; (*output_argc)++) {
+		argv = mem_resize(argv, *output_argc * sizeof(char *),
+				  (*output_argc + 1) * sizeof(char *));
+		check(argv, "OOM: Cannot split command");
+
+		const char *end = skip_word(p);
+
+		char *arg = malloc(end - p + 1);
+		check(arg, "OOM: Cannot split command");
+		argv[*output_argc] = arg;
+
+		copy_str_until(arg, p, end);
+
+		p = skip_space(end);
+	}
+	(*output_argc)--;
+	return argv;
+}
+
 char **
 read_cmd(int *output_argc)
 {
@@ -141,32 +200,8 @@ read_cmd(int *output_argc)
 	char *line = read_a_line();
 	check(line, "OOM: Cannot read from input");
 
-	*output_argc = 0;
-	char **argv = NULL;
-	for (const char *p = line; *p; (*output_argc)++) {
-		argv = mem_resize(argv, *output_argc * sizeof(char *),
-				  (*output_argc + 1) * sizeof(char *));
-		check(argv, "OOM: Cannot split command");
-
-		const char *end = p;
-		while (*end != ' ' && *end)
-			end++;
-
-		char *arg = malloc(end - p + 1);
-		check(arg, "OOM: Cannot split command");
-		argv[*output_argc] = arg;
-
-		while (p < end) {
-			*arg = *p;
-			p++;
-			arg++;
-		}
-
-		while (*p == ' ')
-			p++;
-	}
+	char **argv = split_cmd_line(line, output_argc);
 	free(line);
-	(*output_argc)--;
 	return argv;
 }
 
